@@ -1,0 +1,2 @@
+GET http://localhost:3001/v1/user
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY2RhYmtAZ21haWwuY29tIiwiaWF0IjoxNjc4OTUwMzg2LCJleHAiOjE2Nzg5NTEyODZ9.4jwdnR56ctsCbrtgik98MsqGifpJQZ_JHEE8fbvLngM
