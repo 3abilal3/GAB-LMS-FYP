@@ -10,7 +10,7 @@ const insertUser = userObj => {
 }
 
 const getUserByEmail = (email) => {
- 
+
 
     return new Promise((resolve, reject) => {
         if (!email) return error
@@ -31,7 +31,7 @@ const getUserByEmail = (email) => {
     })
 }
 
-const getUserById = (_id) =>{
+const getUserById = (_id) => {
     return new Promise((resolve, reject) => {
         if (!_id) return error
         try {
@@ -67,21 +67,21 @@ const storeUserRefreshJWT = (_id, token) => {
                     new: true
                 }
             ).then((data) => { resolve(data) })
-            .catch((error) => {
-                reject(error)
-                console.log(error)
+                .catch((error) => {
+                    reject(error)
+                    console.log(error)
 
-            })
+                })
         } catch (error) {
             reject(error)
             console.log(error)
-            
+
         }
-})
+    })
 
 }
-    
-const updatePassword = (email,newHashPass)=>{
+
+const updatePassword = (email, newHashPass) => {
     return new Promise((resolve, reject) => {
 
         try {
@@ -89,24 +89,24 @@ const updatePassword = (email,newHashPass)=>{
                 { email },
                 {
                     $set: {
-                       password: newHashPass
+                        password: newHashPass
                     },
                 },
                 {
                     new: true
                 }
             ).then((data) => { resolve(data) })
-            .catch((error) => {
-                reject(error)
-                console.log(error)
+                .catch((error) => {
+                    reject(error)
+                    console.log(error)
 
-            })
+                })
         } catch (error) {
             reject(error)
             console.log(error)
-            
+
         }
-})
+    })
 }
-   
-module.exports = { insertUser, getUserById ,getUserByEmail,storeUserRefreshJWT,updatePassword }
+
+module.exports = { insertUser, getUserById, getUserByEmail, storeUserRefreshJWT, updatePassword }

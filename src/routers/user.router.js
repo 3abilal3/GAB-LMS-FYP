@@ -1,5 +1,5 @@
 const express = require("express")
-const { insertUser, getUserByEmail, getUserById, updatePassword } = require('../model/user/User.model')
+const { insertUser, getUserByEmail, getUserById, updatePassword, storeUserRefreshJWT } = require('../model/user/User.model')
 const router = express.Router();
 
 const { hashedPassword, compPassword } = require('../helpers/bcrypt.helper');
@@ -8,6 +8,7 @@ const { userAuthorization } = require("../middlewares/auth.middleware");
 const { setPasswordResetPin, getPinByEmail, deletePin } = require("../model/resetpin/Resetpin.model");
 const { emailProcessor } = require("../helpers/email.helper");
 const { resetPassValidation, updatePassValidation } = require("../middlewares/formValidation.middleware");
+const { deleteJWT } = require("../helpers/redis.helper");
 
 router.all('/', (req, res, next) => {
     // res.json({message:"returning user routes"})
@@ -125,7 +126,21 @@ router.patch('/reset-password',updatePassValidation,async(req,res)=>{
 }) 
 
 
-
+router.delete('/logout',userAuthorization,async(req,res)=>{
+    const {authorization}= req.headers
+      //this is coming from db
+      const _id =req.userId 
+      //delete access jwt from redis db
+      deleteJWT(authorization)
+      //delete refresh jwt from atlas
+      const result = await storeUserRefreshJWT(_id,'')
+        if(result._id){
+            
+      return res.json({ status: "success", message:"logged out successfully" })
+        }
+      res.json({ status: "error", message:"cant logged out!!!!!!try again later" })
+  
+       })
 
 
 

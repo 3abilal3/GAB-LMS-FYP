@@ -44,7 +44,6 @@ const getPinByEmail =(email,pin)=>{
                 ResetPinSchema.findOneAndDelete({ email,pin }, (error, data) => {
                     if (error) {
                         console.log(error)
-                        resolve(false)
                     }
                  
                 }
