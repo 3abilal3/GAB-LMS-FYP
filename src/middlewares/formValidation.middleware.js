@@ -10,6 +10,8 @@ const newPassword= Joi.string()
 .max(30)
 .required()
 
+const shortStr = Joi.string().min(2).max(50)
+const longStr = Joi.string().min(2).max(50)
 
 const resetPassValidation =(req,res,next)=>{
     const schema=Joi.object({email})
@@ -30,7 +32,43 @@ const updatePassValidation =(req,res,next)=>{
     next()
 }
 
+const createNewLeadValidation = (req,res,next) =>{
+    const schema=Joi.object({
+        subject:shortStr.required(),
+        sender:shortStr.required(),
+        message:longStr.required()
+
+    })
+
+    const value=schema.validate(req.body)
+
+    if(value.error){
+        res.json({status:"error",message:value.error.message})
+    }
+
+next()
+}
+
+const replyLeadMessageValidation = (req,res,next) =>{
+    const schema=Joi.object({
+        sender:shortStr.required(),
+        message:longStr.required()
+
+    })
+
+    const value=schema.validate(req.body)
+
+    if(value.error){
+        return res.json({status:"error",message:value.error.message})
+    }
+
+next()
+}
+
+
 module.exports={
     resetPassValidation,
-    updatePassValidation
+    updatePassValidation,
+    createNewLeadValidation,
+    replyLeadMessageValidation
 }

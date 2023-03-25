@@ -1,5 +1,6 @@
 const express = require("express");
 const { userAuthorization } = require("../middlewares/auth.middleware");
+const { createNewLeadValidation, replyLeadMessageValidation } = require("../middlewares/formValidation.middleware");
 const { insertLeads, getLeads, getLeadsById,deleteLead , updateClientReply, updateStatusClose } = require("../model/leads/leads.model");
 
 const router = express.Router();
@@ -11,7 +12,7 @@ const router = express.Router();
 
 //create url endpoint
 
-router.post('/', userAuthorization , async(req, res) => {
+router.post('/', createNewLeadValidation,userAuthorization , async(req, res) => {
 
     try {
         
@@ -91,7 +92,7 @@ console.log(req.params)
 }) 
 
 //update the lead status after client reply
-router.put('/:_id', userAuthorization , async(req, res) => {
+router.put('/:_id', replyLeadMessageValidation,userAuthorization , async(req, res) => {
         try {     
         const { message, sender} = req.body;  
         const clientId = req.userId
