@@ -10,6 +10,40 @@ const LeadsSchema=mongoose.Schema({
         maxlength:100,
         default:""
     },
+    
+    leadName:{
+        type:String,
+        required:true,
+        maxlength:100,
+        default:""
+    },
+    wealth:{
+        type:Number,
+        required:true,
+        maxlength:100,
+        default:""
+    },
+    experience:{
+        type:Number,
+        required:true,
+        maxlength:1000,
+        default:""
+    },
+    currentBusinesses:{
+        type:Number,
+        required:true,
+        maxlength:10000,
+        default:""
+    },
+    mostPreferedBusinesses:{
+        type:String,
+        required:true,
+        maxlength:10000,
+        default:""
+    },
+    assignedTo: { type: mongoose.Schema.Types.ObjectId },
+    status: { type: String },
+    source: { type: String },
 
     openAT:{
         type:Date,

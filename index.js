@@ -12,6 +12,8 @@ const mongoose=require("mongoose")
 const dotenv=require('dotenv').config()
 const app=express()
 
+// const customCron =require('./cron')
+
 //for api security
 // app.use(helmet())
 
@@ -47,8 +49,11 @@ app.use((req,res,next)=>{
     next(error)
 })
 
+
 app.use((error,req,res,next)=>{
 handleError(error,res)
 })
+
+// customCron.sendMailAllUser();
 
 app.listen(PORT,()=>{console.log(`app is listening on port ${PORT}`)})

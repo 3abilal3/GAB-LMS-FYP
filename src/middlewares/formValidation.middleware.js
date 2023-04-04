@@ -10,8 +10,8 @@ const newPassword= Joi.string()
 .max(30)
 .required()
 
-const shortStr = Joi.string().min(2).max(50)
-const longStr = Joi.string().min(2).max(50)
+const shortStr = Joi.string().min(1).max(5000)
+const longStr = Joi.string().min(1).max(5000)
 
 const resetPassValidation =(req,res,next)=>{
     const schema=Joi.object({email})
@@ -36,9 +36,18 @@ const createNewLeadValidation = (req,res,next) =>{
     const schema=Joi.object({
         subject:shortStr.required(),
         sender:shortStr.required(),
-        message:longStr.required()
+        leadName:longStr.required(),
+        sender:longStr.required(),
+        currentBusinesses:longStr.required(),
+        mostPreferedBusinesses:longStr.required(),
+        wealth:longStr.required(),
+        experience:longStr.required(),
+        message:longStr.required(),
+        status:shortStr.required(),
+        source:shortStr.required(),
+        assignedTo:shortStr.required()
 
-    })
+    })    
 
     const value=schema.validate(req.body)
 
@@ -48,6 +57,8 @@ const createNewLeadValidation = (req,res,next) =>{
 
 next()
 }
+
+
 
 const replyLeadMessageValidation = (req,res,next) =>{
     const schema=Joi.object({

@@ -85,7 +85,7 @@ router.post('/reset-password',resetPassValidation ,async(req,res)=>{
         
     
 
-    res.json({status:"error",
+    return res.json({status:"error",
     message:"if your email exist in our db then a password reset email wil be sent to you in few seconds"})
 })
 
