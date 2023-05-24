@@ -14,7 +14,8 @@ const app=express()
 // const customCron =require('./cron')
 
 //for api security
-// app.use(helmet())
+// app.use(helmet())<
+
 
 //handles cors error
 app.use(cors())
@@ -27,9 +28,15 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 PORT=process.env.PORT 
-mongoose.connect(process.env.MONGODB_URL,{ useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected!'));
 
+mongoose.connect(process.env.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log('Connected!',process.env.MONGODB_URL))
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error.message);
+  });
   mongoose.set('strictQuery', false);
   mongoose.set('bufferCommands', true);
   mongoose.set('autoCreate', false);

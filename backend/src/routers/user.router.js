@@ -15,11 +15,14 @@ router.all('/', (req, res, next) => {
     next()
 })
 
-router.post('/', async (req, res) => {
-    const { name, company, password, address, phone, email } = req.body
+router.post('/signup', async (req, res) => {
+    const { name, company, Designation, password, address, phone, email } = req.body
     try {
         const hashed = await hashedPassword(password)
-        const newUserObj = { name, company, password: hashed, address, phone, email }
+        const newUserObj = { name, company, Designation, password: hashed, address, phone, email }
+        if (Designation !== 'Manager' && Designation !== 'Leads Manager') {
+            return res.json({ message: 'Invalid user' });
+          }
         const result = await insertUser(newUserObj)
         console.log(result)
         return res.json({ message: "new user created", result })
@@ -40,19 +43,14 @@ router.get('/',userAuthorization,async(req,res)=>{
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
     console.log(req.body)
-
     if (!email || !password) {
         res.json({ status: "Invalid", message: "invalid email or password" })
-
     }
     const user = await getUserByEmail(email)
+    const userDesignation = user.Designation;
     const passFromDb = user && user._id ? user.password : null
     if (!passFromDb) return res.json({ status: "Error", message: "invalid email or password" })
-
-
-
     const result = await compPassword(password, passFromDb)
-
     if (!result) { 
         res.json({ status: "Invalid", message: "invalid email or password" })
 
@@ -61,7 +59,7 @@ router.post('/login', async (req, res) => {
     const refreshJWT = await createRefreshJWT(user.email,`${user._id}`)
 
     console.log(result)
-    res.json({ status: "Success", message: "login successfully",accessJWT,refreshJWT})
+    res.json({ status: "Success", message: "login successfully",accessJWT,refreshJWT,userDesignation})
 
 })
 

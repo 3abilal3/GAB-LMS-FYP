@@ -1,6 +1,99 @@
+const {StaffSchema} = require("./Staff.schema");
+const customerSchema = require("./customer.Schema");
+const LeadCategorySchema = require("./category.Schema");
 const { LeadsSchema } = require("./leads.schema");
 
 
+
+
+
+const insertStaff = staffObj =>{
+
+    return new Promise((resolve,reject)=>{
+        try {
+            StaffSchema(staffObj)
+            .save()
+            .then((data)=>{
+                resolve(data)
+                
+            })
+            .catch((error)=>{
+                reject(error)
+            })
+        
+        } catch (error) {
+
+            reject(error)
+            
+        }
+    })
+   
+}
+
+
+const insertCat = catOBJ =>{
+
+    return new Promise((resolve,reject)=>{
+        try {
+            LeadCategorySchema(catOBJ)
+            .save()
+            .then((data)=>{
+                resolve(data)
+                
+            })
+            .catch((error)=>{
+                reject(error)
+            })
+        
+        } catch (error) {
+
+            reject(error)
+            
+        }
+    })
+   
+}
+
+
+const insertCust = custObj =>{
+
+    return new Promise((resolve,reject)=>{
+        try {
+            customerSchema(custObj)
+            .save()
+            .then((data)=>{
+                resolve(data)
+                
+            })
+            .catch((error)=>{
+                reject(error)
+            })
+        
+        } catch (error) {
+
+            reject(error)
+            
+        }
+    })
+   
+}
+
+// Function to generate the leads report
+function generateLeadsReport(leads) {
+    // Perform necessary calculations and formatting to generate the report
+    const report = {
+      totalLeads: leads.length,
+      leads: leads.map(lead => ({
+        id: lead.id,
+        name: lead.name,
+        email: lead.email,
+        status: lead.status,
+        closed: lead.closed
+      }))
+    };
+  
+    return report;
+  }
 
 const insertLeads = leadsObj =>{
 
@@ -144,8 +237,7 @@ const  updateStatusClose = ({_id,clientId}) =>{
             )
             .then((data)=>{
                 resolve(data)
-                
-            })
+                })
             .catch((error)=>{
                 reject(error)
             })
@@ -192,6 +284,9 @@ module.exports={
     updateClientReply,
     updateStatusClose,
     deleteLead,
-    insertUserLeads
-    
+    insertUserLeads,
+    generateLeadsReport,
+    insertStaff,
+    insertCust,
+    insertCat
 }
